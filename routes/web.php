@@ -6,4 +6,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::
+// Route::prefix('/admin-panel')->name('admin. ')->group(function(){
+//     Route::resource('brand', BrandController::class);
+// });
