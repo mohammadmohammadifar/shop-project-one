@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Brand;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 
-class BrandController extends Controller
+class TagController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,7 +20,7 @@ class BrandController extends Controller
      */
     public function create()
     {
-        return view('admin.pages.brands.create');
+        return view('admin.pages.tags.create');
     }
 
     /**
@@ -28,18 +28,18 @@ class BrandController extends Controller
      */
     public function store(Request $request)
     {
-
         $request->validate([
             'name'=>'required'
         ]);
-        Brand::create([
+
+        Tag::create([
             'name'=>$request->name
         ]);
 
-        alert()->success('Thank you', 'your Brand is create');
-        return redirect()->route('admin.brands.index');
-
+        alert()->success('Thank you','Tag is Created');
+        return redirect()->route('admin.tags.index');
     }
+
     /**
      * Display the specified resource.
      */

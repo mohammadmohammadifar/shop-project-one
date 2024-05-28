@@ -6,12 +6,11 @@ use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Brand extends Model
+class Product extends Model
 {
-    use HasFactory, Sluggable;
+    use HasFactory,Sluggable;
 
     protected $guarded=[];
-
 
     public function sluggable(): array
     {

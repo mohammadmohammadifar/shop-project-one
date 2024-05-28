@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Brand;
 use Illuminate\Http\Request;
 
-class BrandController extends Controller
+class AttributeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,7 +19,7 @@ class BrandController extends Controller
      */
     public function create()
     {
-        return view('admin.pages.brands.create');
+        return view('admin.pages.attributes.create');
     }
 
     /**
@@ -28,18 +27,9 @@ class BrandController extends Controller
      */
     public function store(Request $request)
     {
-
-        $request->validate([
-            'name'=>'required'
-        ]);
-        Brand::create([
-            'name'=>$request->name
-        ]);
-
-        alert()->success('Thank you', 'your Brand is create');
-        return redirect()->route('admin.brands.index');
-
+        //
     }
+
     /**
      * Display the specified resource.
      */

@@ -78,6 +78,7 @@
 
           <!-- / Navbar -->
 
+
           <!-- Content wrapper -->
           <div class="content-wrapper">
             <!-- Content -->
@@ -110,6 +111,8 @@
         >Upgrade to Pro</a
       >
     </div>
+
+    @include('sweetalert::alert')
 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
