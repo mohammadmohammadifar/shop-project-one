@@ -72,22 +72,74 @@
 
                         {{-- category --}}
 
-                        <div>
-                            <h5>category</h5>
+                        {{-- variation --}}
+                        <div class="col-md-12">
+                            <hr>
+                            <p>Category & Attribute: </p>
                         </div>
 
-                        <div>
-                            <div class="mb-3 col-md-4 center">
-                                <label for="" class="form-label">category</label>
-                                <select class="form-select form-select-lg" name="Category_id" id="">
-                                    <option value="">select</option>
-                                    @foreach ($categories as $category)
-                                        <option value="{{ $category->id }}">{{ $category->name }} - {{ $category->parent->name }}</option>
-                                    @endforeach
-                                </select>
+                        <div class="col-md-12">
+                            <div class="row justify-content-center">
+                                <div class="form-group col-md-3">
+                                    <label for="category_id">category</label>
+                                    <select id="categorySelect" name="category_id" class="form-control" data-live-search="true">
+                                        @foreach ($categories as $category)
+                                            <option value="{{ $category->id }}">{{ $category->name }} -
+                                                {{ $category->parent->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
 
+                            <div class="col-md-12">
+                                <div class="col-md-3">
+                                    @foreach ($attributeId as $attribute)
+                                        <div class="mb-3">
+                                            <label for="" class="form-label">{{ $attribute->name }}</label>
+                                            <input type="text" class="form-control" name="attribute_ids[]" id=""
+                                                aria-describedby="helpId" placeholder="" />
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
                         </div>
+
+                        <div id="attributesContainer" class="col-md-12">
+                            <div id="attributes" class="row"></div>
+                            <div class="col-md-12">
+                                <hr>
+                                <p>for variation <span class="font-weight-bold" id="variationName"></span> :
+                                </p>
+                            </div>
+
+
+                        <div id="czContainer">
+                            <div id="first">
+                                <div class="recordset">
+                                    <div class="row">
+                                        <div class="form-group col-md-3">
+                                            <label>name</label>
+                                            <input class="form-control" name="variation_values[value][]" type="text">
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label>price</label>
+                                            <input class="form-control" name="variation_values[price][]" type="text">
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label>quantity</label>
+                                            <input class="form-control" name="variation_values[quantity][]"
+                                                type="text">
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label>sku</label>
+                                            <input class="form-control" name="variation_values[sku][]" type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
 
 
                         {{-- delivery --}}
@@ -95,7 +147,7 @@
 
 
 
-                        <button type="submit" class="btn btn-outline-success">create</button>
+                        <button type="submit" class="btn btn-outline-success mt-5">create</button>
 
                     </form>
                 </div>

@@ -25,11 +25,11 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $brands=Brand::all();
-        $categories=Category::where('parent_id','!=', 0)->get();
-        $attributeId=Attribute::all();
-        $categoryId=Category::all();
-        return view('admin.pages.products.create',compact('brands','categories','attributeId','categoryId'));
+        $brands = Brand::all();
+        $categories = Category::where('parent_id', '!=', 0)->get();
+        $attributeId = Attribute::all();
+        $categoryId = Category::all();
+        return view('admin.pages.products.create', compact('brands', 'categories', 'attributeId', 'categoryId'));
     }
 
     /**
@@ -37,37 +37,37 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $requesy->validate([
+        // dd($request->all());
+        // $requesف->validate([
 
-        ]);
+        // ]);
 
         try {
             DB::beginTransaction();
 
-            $productimage=new ProductImageController();
-            $fileNameImage=$productimage->upload($request->primary_image, $request->images);
+            $productimage = new ProductImageController();
+            $fileNameImage = $productimage->upload($request->primary_image, $request->images);
 
-            $product=Product::create([
-                'name'=>$request->name,
-                'brand_id'=>$request->brand_id,
-                'category_id'=>$request->category_id,
-                'primary_image'=>$fileNameImage['fileNamePrimaryImage'],
-                'description'=>$request->description,
-                'status'=>$request->status,
-                'delivery_amount'=>$request->delivery_amount,
-                'delivery_amount_per_product'=>$request->delivery_amount_per_product
+            $product = Product::create([
+                'name' => $request->name,
+                'brand_id' => $request->brand_id,
+                'category_id' => $request->category_id,
+                'primary_image' => $fileNameImage['fileNamePrimaryImage'],
+                'description' => $request->description,
+                'status' => $request->status,
+                'delivery_amount' => $request->delivery_amount,
+                'delivery_amount_per_product' => $request->delivery_amount_per_product
             ]);
 
-            foreach($fileNameImage['fileNameImage'] as $image)
-            {
+            foreach ($fileNameImage['fileNameImage'] as $image) {
                 ProductImage::create([
-                    'product_id'=>$product->id,
-                    'image'=>$image
+                    'product_id' => $product->id,
+                    'image' => $image
                 ]);
             }
 
             // productAttribute
-            $productAttribute= new ProductAttributeController();
+            $productAttribute = new ProductAttributeController();
             $productAttribute->store($request->product_attributes, $product);
 
 
@@ -77,11 +77,20 @@ class ProductController extends Controller
             $ProductVaritionCintroll = new ProductVariationController();
             $ProductVaritionCintroll->store($request->variation_values, $attributeId, $product);
 
+            // tags
+            $product->tags()->attach($request->tag_ids);
+
+
 
             DB::commit();
-        } catch (\Throwable $th) {
-            //throw $th;
+        } catch (\Exception $ex) {
+            DB::rollBack();
+            alert()->error('error', $ex->getMessage());
+            return redirect()->back();
         }
+
+        alert()->success('thanks', 'product is creat');
+        return redirect()->route('admin.products.index');
     }
 
     /**
