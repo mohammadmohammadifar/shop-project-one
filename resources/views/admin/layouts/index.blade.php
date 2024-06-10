@@ -43,7 +43,8 @@
     />
 
     <!-- Icons. Uncomment required icon fonts -->
-    <link rel="stylesheet" href="../assets/vendor/fonts/boxicons.css" />
+    <link rel="stylesheet" href="{{ asset('vendor/fonts/boxicons.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
     <!-- Core CSS -->
     <link rel="stylesheet" href="{{ asset('vendor/css/core.css') }}" class="template-customizer-core-css" />
@@ -83,12 +84,12 @@
           <div class="content-wrapper">
             <!-- Content -->
 
-            @yield('content')
+        @yield('content')
 
             <!-- / Content -->
 
             <!-- Footer -->
-            @include('admin.partials.footer')
+        @include('admin.partials.footer')
             <!-- / Footer -->
 
             <div class="content-backdrop fade"></div>

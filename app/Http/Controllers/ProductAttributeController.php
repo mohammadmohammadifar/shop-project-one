@@ -26,7 +26,7 @@ class ProductAttributeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function show(Request $request)
     {
         //
     }
@@ -34,15 +34,14 @@ class ProductAttributeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($attributes, $product)
+    public function store($attributes, $product)
     {
-        foreach($attributes as $key=>$attribute)
+        foreach($attributes as $key=>$value)
         {
             productAttribute::create([
                 'attribute_id'=>$key,
                 'product_id'=>$product->id,
-                'value'=>$attribute->value,
-                'is_active'=>$attribute->is_active
+                'value'=>$value,
             ]);
         }
     }

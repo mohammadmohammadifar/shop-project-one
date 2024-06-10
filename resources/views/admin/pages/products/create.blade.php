@@ -11,35 +11,47 @@
             <div class="row">
                 <div class="col-md-12">
 
-                    <form action="{{ route('admin.products.store') }}" method="POST">
+                    <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
 
-                        {{-- name --}}
-                        <div class="mb-3 col-md-4">
-                            <label for="" class="form-label">Name</label>
-                            <input type="text" class="form-control" name="name" id=""
-                                aria-describedby="helpId" placeholder="" />
+                        <div class="row">
+                            {{-- name --}}
+                            <div class="mb-3 col-md-3">
+                                <label for="" class="form-label">Name</label>
+                                <input type="text" class="form-control" name="name" id=""
+                                    aria-describedby="helpId" placeholder="" />
+                            </div>
+
+                            {{-- brand --}}
+                            <div class="mb-3 col-md-3">
+                                <label for="" class="form-label">brand</label>
+                                <select class="form-select form-select-lg" name="brand_id" id="">
+                                    @foreach ($brands as $brand)
+                                        <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+
+                            {{-- status --}}
+                            <div class="mb-3 col-md-3">
+                                <label for="" class="form-label">is_active</label>
+                                <select class="form-select form-select-lg" name="status" id="">
+                                    <option value="1">active</option>
+                                    <option value="0">disactive</option>
+                                </select>
+                            </div>
+
+                            {{-- is_active --}}
+                            <div class="mb-3 col-md-3">
+                                <label for="" class="form-label">is_active</label>
+                                <select class="form-select form-select-lg" name="is_active" id="">
+                                    <option value="1">active</option>
+                                    <option value="0">disactive</option>
+                                </select>
+                            </div>
                         </div>
 
-                        {{-- brand --}}
-                        <div class="mb-3 col-md-4">
-                            <label for="" class="form-label">brand</label>
-                            <select class="form-select form-select-lg" name="brand_id" id="">
-                                @foreach ($brands as $brand)
-                                    <option value="{{ $brand->id }}">{{ $brand->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
-
-                        {{-- status --}}
-                        <div class="mb-3 col-md-4">
-                            <label for="" class="form-label">is_active</label>
-                            <select class="form-select form-select-lg" name="status" id="">
-                                <option value="1">active</option>
-                                <option value="0">disactive</option>
-                            </select>
-                        </div>
 
                         {{-- description --}}
                         <div class="mb-3">
@@ -82,13 +94,21 @@
                             <div class="row justify-content-center">
                                 <div class="form-group col-md-3">
                                     <label for="category_id">category</label>
-                                    <select id="categorySelect" name="category_id" class="form-control" data-live-search="true">
+                                    <select id="categorySelect" name="category_id" class="form-control"
+                                        data-live-search="true">
                                         @foreach ($categories as $category)
                                             <option value="{{ $category->id }}">{{ $category->name }} -
                                                 {{ $category->parent->name }}
                                             </option>
                                         @endforeach
                                     </select>
+                                </div>
+                            </div>
+
+                                <div class="col-md-12">
+                                    <div class="row">
+
+                                    </div>
                                 </div>
                             </div>
 
@@ -103,51 +123,73 @@
                                     @endforeach
                                 </div>
                             </div>
-                        </div>
 
-                        <div id="attributesContainer" class="col-md-12">
-                            <div id="attributes" class="row"></div>
-                            <div class="col-md-12">
-                                <hr>
-                                <p>for variation <span class="font-weight-bold" id="variationName"></span> :
-                                </p>
-                            </div>
+                            <div id="attributesContainer" class="col-md-12">
+                                <div id="attributes" class="row"></div>
+                                <div class="col-md-12">
+                                    <hr>
+                                    <p>for variation <span class="font-weight-bold" id="variationName"></span> :
+                                    </p>
+                                </div>
 
 
-                        <div id="czContainer">
-                            <div id="first">
-                                <div class="recordset">
-                                    <div class="row">
-                                        <div class="form-group col-md-3">
-                                            <label>name</label>
-                                            <input class="form-control" name="variation_values[value][]" type="text">
-                                        </div>
-                                        <div class="form-group col-md-3">
-                                            <label>price</label>
-                                            <input class="form-control" name="variation_values[price][]" type="text">
-                                        </div>
-                                        <div class="form-group col-md-3">
-                                            <label>quantity</label>
-                                            <input class="form-control" name="variation_values[quantity][]"
-                                                type="text">
-                                        </div>
-                                        <div class="form-group col-md-3">
-                                            <label>sku</label>
-                                            <input class="form-control" name="variation_values[sku][]" type="text">
+                                <div id="czContainer">
+                                    <div id="first">
+                                        <div class="recordset">
+                                            <div class="row">
+                                                <div class="form-group col-md-3">
+                                                    <label>name</label>
+                                                    <input class="form-control" name="variation_values[value][]"
+                                                        type="text">
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label>price</label>
+                                                    <input class="form-control" name="variation_values[price][]"
+                                                        type="text">
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label>quantity</label>
+                                                    <input class="form-control" name="variation_values[quantity][]"
+                                                        type="text">
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label>sku</label>
+                                                    <input class="form-control" name="variation_values[sku][]"
+                                                        type="text">
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
+                                <hr>
+
+
+                                {{-- delivery --}}
+                                <div>
+                                    <div>
+                                        <h3>delivery</h3>
+                                    </div>
+                                    <div class="row">
+                                        <div class="mb-3 col-md-4">
+                                            <label for="" class="form-label">delivery_amount</label>
+                                            <input type="text" class="form-control" name="delivery_amount"
+                                                id="" aria-describedby="helpId" placeholder="" />
+                                        </div>
+                                        <div class="mb-3 col-md-4">
+                                            <label for="" class="form-label">delivery_amount_per_product</label>
+                                            <input type="text" class="form-control" name="delivery_amount_per_product"
+                                                id="" aria-describedby="helpId" placeholder="" />
+                                        </div>
+                                    </div>
+                                </div>
 
 
 
-                        {{-- delivery --}}
 
 
 
 
-                        <button type="submit" class="btn btn-outline-success mt-5">create</button>
+                                <button type="submit" class="btn btn-outline-success mt-5">create</button>
 
                     </form>
                 </div>

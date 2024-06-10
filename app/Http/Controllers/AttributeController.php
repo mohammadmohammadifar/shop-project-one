@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Attribute;
 use Illuminate\Http\Request;
 
 class AttributeController extends Controller
@@ -27,7 +28,16 @@ class AttributeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name'=>'required'
+        ]);
+
+        Attribute::create([
+            'name'=>$request->name
+        ]);
+
+        alert()->success('Thank you', 'your attribute is created');
+        return redirect()->route('admin.attributes.index');
     }
 
     /**

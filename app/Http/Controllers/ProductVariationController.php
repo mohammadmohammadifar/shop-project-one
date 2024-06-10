@@ -9,8 +9,9 @@ class ProductVariationController extends Controller
 {
     public function store($variations,$attributeId,$product)
     {
+        // dd($variations,$attributeId,$product);
         $counter=count($variations['value']);
-        for($i=0 ; $i<$counter; $i++ ){
+        for($i=0;$i<$counter;$i++) {
             ProductVariation::create([
                 'variation_id'=>$attributeId,
                 'product_id'=>$product->id,

@@ -17,7 +17,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products=Product::orderByDesc('created_at')->paginate(10);
+        return view ('admin.pages.products.index', compact('products'));
     }
 
     /**
@@ -38,7 +39,10 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         // dd($request->all());
-        // $requesف->validate([
+        // $request->validate([
+        //     'name'=>'required',
+        //     'brand_id'=>'required',
+        //     'is_active'=>'required',
 
         // ]);
 
@@ -52,14 +56,14 @@ class ProductController extends Controller
                 'name' => $request->name,
                 'brand_id' => $request->brand_id,
                 'category_id' => $request->category_id,
-                'primary_image' => $fileNameImage['fileNamePrimaryImage'],
+                'primary_image' => $fileNameImage['fileNamePrimaryImagereplace'],
                 'description' => $request->description,
                 'status' => $request->status,
                 'delivery_amount' => $request->delivery_amount,
                 'delivery_amount_per_product' => $request->delivery_amount_per_product
             ]);
-
-            foreach ($fileNameImage['fileNameImage'] as $image) {
+            // dd($fileNameImage['fileNameImagereplace']);
+            foreach ($fileNameImage['fileNameImagereplace'] as $image) {
                 ProductImage::create([
                     'product_id' => $product->id,
                     'image' => $image
@@ -67,8 +71,9 @@ class ProductController extends Controller
             }
 
             // productAttribute
+            // dd($request->attribute_ids, $product);
             $productAttribute = new ProductAttributeController();
-            $productAttribute->store($request->product_attributes, $product);
+            $productAttribute->store($request->attribute_ids, $product);
 
 
             // productVariation
@@ -78,7 +83,7 @@ class ProductController extends Controller
             $ProductVaritionCintroll->store($request->variation_values, $attributeId, $product);
 
             // tags
-            $product->tags()->attach($request->tag_ids);
+            // $product->tags()->attach($request->tag_ids);
 
 
 
